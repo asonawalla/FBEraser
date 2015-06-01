@@ -3,10 +3,6 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 from argparse import ArgumentParser
 
-# this is the class name that FB is using to identify divs that can be deleted
-# in the activity feed.  this will probably change at some point
-# todo: find a better way to identify these
-activity_class = 'pam _5shk uiBoxWhite bottomborder'
 
 class Eraser:
     """
