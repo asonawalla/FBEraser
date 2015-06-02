@@ -14,7 +14,7 @@ class Eraser:
     Don't forget to quit in the end
     """
 
-    def __init__(self, email, password, timeout=None):
+    def __init__(self, email, password, wait=None):
         """
         Set up the eraser
         :return: Null
@@ -24,7 +24,7 @@ class Eraser:
         self.password = password
         self.profile_name = None            # this will end up being the facebook user name
         if args.timeout:
-            self.wait_time = timeout
+            self.wait_time = wait
         else:
             self.wait_time = 1              # default timeout if no argument passed
 
@@ -100,11 +100,11 @@ if __name__ == '__main__':
     parser = ArgumentParser(description='Delete your Facebook activity.  Requires Firefox')
     parser.add_argument('email', help='Facebook email login')
     parser.add_argument('password', help='Facebook password')
-    parser.add_argument('--timeout', help='Explicit wait time between page loads')
+    parser.add_argument('--wait', help='Explicit wait time between page loads')
     args = parser.parse_args()
 
     # execute the script
-    eraser = Eraser(email=args.email, password=args.password, timeout=args.timeout)
+    eraser = Eraser(email=args.email, password=args.password, wait=args.wait)
     eraser.login()
     eraser.go_to_activity_page()
     while True:
