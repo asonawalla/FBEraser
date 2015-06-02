@@ -51,9 +51,12 @@ class Eraser:
         Go to the activity page and prepare to start deleting
         :return: Null
         """
-        # go to the activity page
-        activity_link = 'https://www.facebook.com/' + self.profile_name + '/allactivity?filter_onlyme=on'
+        # go to the activity page (filter by 'Your Posts')
+        activity_link = 'https://www.facebook.com/' + self.profile_name + '/allactivity?privacy_source=activity_log&log_filter=cluster_11'
         self.driver.get(activity_link)
+
+    def scroll_down(self):
+        self.driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
 
     def delete_element(self):
         """
@@ -63,21 +66,19 @@ class Eraser:
 
         # click hidden from timeline so the delete button shows up
         soup = BeautifulSoup(self.driver.page_source)
-        #todo: get this work for Allowed on Timeline menus as well
-        menu_button = soup.find('a', {'aria-label': 'Hidden from Timeline'})
-        menu_element = self.driver.find_element_by_id(menu_button.get('id'))
-        menu_element.click()
+        # Priority: highlights, allowed, hidden
+        menu_button = soup.find('a', {'aria-label': 'Highlighted on Timeline'})
+        if menu_button is None:
+            menu_button = soup.find('a', {'aria-label': 'Allowed on Timeline'})
+        if menu_button is None:
+            menu_button = soup.find('a', {'aria-label': 'Hidden from Timeline'})
+        self.driver.find_element_by_id(menu_button.get('id')).click()
 
         # now that the delete button comes up, find the delete link and click
-        soup = BeautifulSoup(self.driver.page_source)
-        delete_button = soup.find('a', {'rel': 'async-post'})
-        delete_element = self.driver.find_element_by_class_name(delete_button.get('class')[0])
-        delete_element.click()
+        self.driver.find_element_by_link_text('Delete').click()
 
         # click the confirm button
-        soup = BeautifulSoup(self.driver.page_source)       # used implicitly to wait for the page to load
-        submit_element = self.driver.find_element_by_class_name('layerConfirm')
-        submit_element.click()
+        self.driver.find_element_by_class_name('layerConfirm').click()
         print '[+] Element Deleted'
 
 
@@ -98,6 +99,5 @@ if __name__ == '__main__':
     while True:
         try:
             eraser.delete_element()
-            eraser.go_to_activity_page()
-        except:
-            pass
+        except Exception, e:
+            print e
