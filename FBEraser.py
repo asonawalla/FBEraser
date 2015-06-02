@@ -22,6 +22,7 @@ class Eraser:
         self.email = email
         self.password = password
         self.profile_name = None            # this will end up being the facebook user name
+        self.count = 0                      # counter of number of elements deleted
         if args.timeout:
             self.wait_time = wait
         else:
@@ -90,9 +91,10 @@ class Eraser:
         self.driver.find_element_by_link_text('Delete').click()
         sleep(self.wait_time)
 
-        # click the confirm button
+        # click the confirm button, increment counter and display success
         self.driver.find_element_by_class_name('layerConfirm').click()
-        print '[+] Element Deleted'
+        self.count += 1
+        print '[+] Element Deleted (' + str(self.count) + ' in total)'
         sleep(self.wait_time)
 
 
@@ -104,7 +106,7 @@ if __name__ == '__main__':
     parser = ArgumentParser(description='Delete your Facebook activity.  Requires Firefox')
     parser.add_argument('email', help='Facebook email login')
     parser.add_argument('password', help='Facebook password')
-    parser.add_argument('--wait', help='Explicit wait time between page loads')
+    parser.add_argument('--wait', help='Explicit wait time between page loads (default 1 second)')
     args = parser.parse_args()
 
     # execute the script
