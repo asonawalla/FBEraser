@@ -2,6 +2,7 @@ __author__ = 'azim.sonawalla@gmail.com'
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from argparse import ArgumentParser
+from time import sleep
 
 
 class Eraser:
@@ -13,7 +14,7 @@ class Eraser:
     Don't forget to quit in the end
     """
 
-    def __init__(self, email, password):
+    def __init__(self, email, password, timeout=None):
         """
         Set up the eraser
         :return: Null
@@ -21,7 +22,11 @@ class Eraser:
         self.driver = webdriver.Firefox()
         self.email = email
         self.password = password
-        self.profile_name = None        # this will end up being the facebook user name
+        self.profile_name = None            # this will end up being the facebook user name
+        if args.timeout:
+            self.wait_time = timeout
+        else:
+            self.wait_time = 1              # default timeout if no argument passed
 
     def quit(self):
         """
@@ -54,9 +59,11 @@ class Eraser:
         # go to the activity page (filter by 'Your Posts')
         activity_link = 'https://www.facebook.com/' + self.profile_name + '/allactivity?privacy_source=activity_log&log_filter=cluster_11'
         self.driver.get(activity_link)
+        sleep(self.wait_time)
 
     def scroll_down(self):
         self.driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+        sleep(self.wait_time)
 
     def delete_element(self):
         """
@@ -73,13 +80,16 @@ class Eraser:
         if menu_button is None:
             menu_button = soup.find('a', {'aria-label': 'Hidden from Timeline'})
         self.driver.find_element_by_id(menu_button.get('id')).click()
+        sleep(self.wait_time)
 
         # now that the delete button comes up, find the delete link and click
         self.driver.find_element_by_link_text('Delete').click()
+        sleep(self.wait_time)
 
         # click the confirm button
         self.driver.find_element_by_class_name('layerConfirm').click()
         print '[+] Element Deleted'
+        sleep(self.wait_time)
 
 
 if __name__ == '__main__':
@@ -90,10 +100,11 @@ if __name__ == '__main__':
     parser = ArgumentParser(description='Delete your Facebook activity.  Requires Firefox')
     parser.add_argument('email', help='Facebook email login')
     parser.add_argument('password', help='Facebook password')
+    parser.add_argument('--timeout', help='Explicit wait time between page loads')
     args = parser.parse_args()
 
     # execute the script
-    eraser = Eraser(email=args.email, password=args.password)
+    eraser = Eraser(email=args.email, password=args.password, timeout=args.timeout)
     eraser.login()
     eraser.go_to_activity_page()
     while True:
