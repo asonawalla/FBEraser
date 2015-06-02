@@ -8,9 +8,8 @@ from time import sleep
 class Eraser:
     """
     Eraser class to remove Facebook content
-    Set this guy up, log in, then repeat:
-    - go_to_activity_page()
-    - delete_element()
+    Set up, log in, go to activity page, then repeat delete
+    If having trouble, use scroll down method or increase wait time
     Don't forget to quit in the end
     """
 
@@ -62,6 +61,11 @@ class Eraser:
         sleep(self.wait_time)
 
     def scroll_down(self):
+        """
+        Executes JS to scroll down on page.
+        Use if having trouble seeing elements
+        :return:
+        """
         self.driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
         sleep(self.wait_time)
 
