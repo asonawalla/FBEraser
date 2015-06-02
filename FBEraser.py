@@ -117,4 +117,4 @@ if __name__ == '__main__':
         try:
             eraser.delete_element()
         except Exception, e:
-            print e
+            print '[-] Problem deleting element, trying again'
