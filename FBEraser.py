@@ -23,7 +23,7 @@ class Eraser:
         self.password = password
         self.profile_name = None            # this will end up being the facebook user name
         self.count = 0                      # counter of number of elements deleted
-        if args.timeout:
+        if wait:
             self.wait_time = wait
         else:
             self.wait_time = 1              # default timeout if no argument passed
