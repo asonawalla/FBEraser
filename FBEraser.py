@@ -118,3 +118,4 @@ if __name__ == '__main__':
             eraser.delete_element()
         except Exception, e:
             print '[-] Problem deleting element, trying again'
+            eraser.scroll_down()
