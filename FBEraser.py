@@ -1,4 +1,3 @@
-__author__ = 'azim.sonawalla@gmail.com'
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from argparse import ArgumentParser
