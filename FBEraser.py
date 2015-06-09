@@ -2,7 +2,7 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 from argparse import ArgumentParser
 from time import sleep
-
+import getpass
 
 class Eraser(object):
     """
@@ -114,13 +114,13 @@ if __name__ == '__main__':
     """
     # set up the command line argument parser
     parser = ArgumentParser(description='Delete your Facebook activity.  Requires Firefox')
-    parser.add_argument('email', help='Facebook email login')
-    parser.add_argument('password', help='Facebook password')
     parser.add_argument('--wait', help='Explicit wait time between page loads (default 1 second)')
     args = parser.parse_args()
 
     # execute the script
-    eraser = Eraser(email=args.email, password=args.password, wait=args.wait)
+    email = raw_input("Please enter Facebook username: ")
+    password = getpass.getpass()
+    eraser = Eraser(email=email, password=password, wait=args.wait)
     eraser.login()
     eraser.go_to_activity_page()
     # track failures
