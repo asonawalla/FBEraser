@@ -4,7 +4,7 @@ from argparse import ArgumentParser
 from time import sleep
 
 
-class Eraser:
+class Eraser(object):
     """
     Eraser class to remove Facebook content
     Set up, log in, go to activity page, then repeat delete
