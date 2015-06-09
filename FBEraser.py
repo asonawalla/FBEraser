@@ -84,11 +84,22 @@ class Eraser:
             menu_button = soup.find('a', {'aria-label': 'Allowed on Timeline'})
         if menu_button is None:
             menu_button = soup.find('a', {'aria-label': 'Hidden from Timeline'})
-        self.driver.find_element_by_id(menu_button.get('id')).click()
+        menu_element = self.driver.find_element_by_id(menu_button.get('id'))
+        menu_element.click()
         sleep(self.wait_time)
 
         # now that the delete button comes up, find the delete link and click
-        self.driver.find_element_by_link_text('Delete').click()
+        # sometimes it takes more than one click to get the delete button to pop up
+        if menu_button is not None:
+            i = 0
+            while i < 3:
+                try:
+                    self.driver.find_element_by_link_text('Delete').click()
+                    break
+                except:
+                    print '[*] Clicking menu again'
+                    menu_element.click()
+                    i += 1
         sleep(self.wait_time)
 
         # click the confirm button, increment counter and display success
@@ -113,9 +124,19 @@ if __name__ == '__main__':
     eraser = Eraser(email=args.email, password=args.password, wait=args.wait)
     eraser.login()
     eraser.go_to_activity_page()
+    # track failures
+    fail_count = 0
     while True:
-        try:
-            eraser.delete_element()
-        except Exception, e:
-            print '[-] Problem deleting element, trying again'
+        if fail_count >= 3:
+            print '[*] Scrolling down'
             eraser.scroll_down()
+            fail_count = 0
+            sleep(5)
+        try:
+            print '[*] Trying to delete element'
+            eraser.delete_element()
+            fail_count = 0
+        except Exception, e:
+            print '[-] Problem finding element'
+            fail_count += 1
+            sleep(2)
