@@ -1,3 +1,4 @@
+from __future__ import print_function
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from argparse import ArgumentParser
@@ -96,7 +97,7 @@ class Eraser(object):
                     self.driver.find_element_by_link_text('Delete').click()
                     break
                 except:
-                    print '[*] Clicking menu again'
+                    print ('[*] Clicking menu again')
                     menu_element.click()
                     i += 1
         sleep(self.wait_time)
@@ -104,7 +105,7 @@ class Eraser(object):
         # click the confirm button, increment counter and display success
         self.driver.find_element_by_class_name('layerConfirm').click()
         self.count += 1
-        print '[+] Element Deleted (' + str(self.count) + ' in total)'
+        print ('[+] Element Deleted ({count} in total)'.format(count=self.count))
         sleep(self.wait_time)
 
 
@@ -127,15 +128,15 @@ if __name__ == '__main__':
     fail_count = 0
     while True:
         if fail_count >= 3:
-            print '[*] Scrolling down'
+            print ('[*] Scrolling down')
             eraser.scroll_down()
             fail_count = 0
             sleep(5)
         try:
-            print '[*] Trying to delete element'
+            print ('[*] Trying to delete element')
             eraser.delete_element()
             fail_count = 0
-        except Exception, e:
-            print '[-] Problem finding element'
+        except (Exception, ) as e:
+            print ('[-] Problem finding element')
             fail_count += 1
             sleep(2)
