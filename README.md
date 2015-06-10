@@ -6,7 +6,12 @@ FBEraser is a command line python tool that logs into your Facebook account, goe
 Improvements are welcome, as is issue logging.
 
 ## Usage
-python FBEraser.py < username > < password >
+Via the command line, use:
+```
+python FBEraser.py
+```
+
+The program will prompt you for a username and password
 
 ## Requirements
 FBEraser requires python 2, selenium, and beautiful soup.
