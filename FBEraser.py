@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 from argparse import ArgumentParser
 from time import sleep
 import getpass
+import sys
+if sys.version[0] == '3': raw_input=input   # for python 2/3 cross compatibility
 
 class Eraser(object):
     """
