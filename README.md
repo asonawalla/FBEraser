@@ -14,7 +14,10 @@ python FBEraser.py
 The program will prompt you for a username and password
 
 ## Requirements
-FBEraser requires python 2, selenium, and beautiful soup.
+FBEraser requires the following: 
+* Python 2.7.* or 3.4.*
+* Selenium
+* BeautifulSoup
 
 ## License
 Copyright 2015 Azim Sonawalla
