@@ -86,6 +86,8 @@ class Eraser(object):
             menu_button = soup.find('a', {'aria-label': 'Allowed on Timeline'})
         if menu_button is None:
             menu_button = soup.find('a', {'aria-label': 'Hidden from Timeline'})
+        if menu_button is None:
+            menu_button = soup.find('a', {'aria-label': 'Shown on Timeline'})
         menu_element = self.driver.find_element_by_id(menu_button.get('id'))
         menu_element.click()
         sleep(self.wait_time)
