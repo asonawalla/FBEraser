@@ -123,7 +123,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # execute the script
-    email = raw_input("Please enter Facebook username: ")
+    email = raw_input("Please enter Facebook login email: ")
     password = getpass.getpass()
     eraser = Eraser(email=email, password=password, wait=args.wait)
     eraser.login()
