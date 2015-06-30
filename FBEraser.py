@@ -55,6 +55,9 @@ class Eraser(object):
         Go to the activity page and prepare to start deleting
         :return: Null
         """
+        if not self.profile_name:
+            # the user hasn't logged in properly
+            sys.exit(-2)
         # go to the activity page (filter by 'Your Posts')
         activity_link = 'https://www.facebook.com/' + self.profile_name + '/allactivity?privacy_source=activity_log&log_filter=cluster_11'
         self.driver.get(activity_link)
@@ -116,7 +119,7 @@ if __name__ == '__main__':
     """
     # set up the command line argument parser
     parser = ArgumentParser(description='Delete your Facebook activity.  Requires Firefox')
-    parser.add_argument('--wait', help='Explicit wait time between page loads (default 1 second)')
+    parser.add_argument('--wait', type=float, default=1, help='Explicit wait time between page loads (default 1 second)')
     args = parser.parse_args()
 
     # execute the script
