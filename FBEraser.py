@@ -15,7 +15,7 @@ class Eraser(object):
     Don't forget to quit in the end
     """
 
-    def __init__(self, email, password, wait=None):
+    def __init__(self, email, password, wait=1):
         """
         Set up the eraser
         :return: Null
@@ -25,10 +25,7 @@ class Eraser(object):
         self.password = password
         self.profile_name = None            # this will end up being the facebook user name
         self.count = 0                      # counter of number of elements deleted
-        if wait:
-            self.wait_time = wait
-        else:
-            self.wait_time = 1              # default timeout if no argument passed
+        self.wait = wait
 
     def quit(self):
         """
@@ -61,7 +58,7 @@ class Eraser(object):
         # go to the activity page (filter by 'Your Posts')
         activity_link = 'https://www.facebook.com/' + self.profile_name + '/allactivity?privacy_source=activity_log&log_filter=cluster_11'
         self.driver.get(activity_link)
-        sleep(self.wait_time)
+        sleep(self.wait)
 
     def scroll_down(self):
         """
@@ -70,7 +67,7 @@ class Eraser(object):
         :return:
         """
         self.driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-        sleep(self.wait_time)
+        sleep(self.wait)
 
     def delete_element(self):
         """
@@ -90,7 +87,7 @@ class Eraser(object):
             menu_button = soup.find('a', {'aria-label': 'Shown on Timeline'})
         menu_element = self.driver.find_element_by_id(menu_button.get('id'))
         menu_element.click()
-        sleep(self.wait_time)
+        sleep(self.wait)
 
         # now that the delete button comes up, find the delete link and click
         # sometimes it takes more than one click to get the delete button to pop up
@@ -104,13 +101,13 @@ class Eraser(object):
                     print ('[*] Clicking menu again')
                     menu_element.click()
                     i += 1
-        sleep(self.wait_time)
+        sleep(self.wait)
 
         # click the confirm button, increment counter and display success
         self.driver.find_element_by_class_name('layerConfirm').click()
         self.count += 1
         print ('[+] Element Deleted ({count} in total)'.format(count=self.count))
-        sleep(self.wait_time)
+        sleep(self.wait)
 
 
 if __name__ == '__main__':
