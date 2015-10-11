@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from __future__ import print_function
 from selenium import webdriver
 from bs4 import BeautifulSoup
