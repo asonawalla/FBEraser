@@ -5,22 +5,19 @@ FBEraser is a command line python tool that logs into your Facebook account, goe
 
 Improvements are welcome, as is issue logging.
 
+Branch graph-api re-writes FBEraser using the Facebook graph API. It's a work in progress, since the original version doesn't seem to be very effective anymore.
+
 ## Usage
-Via the command line, use:
-```
-python FBEraser.py
-```
+To use this tool, you're responsible to get your own Facebook `access_token`.  The easiest way to do so is to go to the graph API explorer at:
 
-The program will prompt you for a username and password
+`https://developers.facebook.com/tools/explorer/`
 
-## Requirements
-FBEraser requires the following: 
-* Python 2.7.* or 3.4.*
-* Selenium
-* BeautifulSoup
+When you click 'Get Token', enable permissions for the posts you want to delete.
+
+Then run `FBEraser -token='[your token]'`
 
 ## License
-Copyright 2015 Azim Sonawalla
+Copyright 2016 Azim Sonawalla
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

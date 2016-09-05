@@ -1,3 +1,4 @@
 .idea
 *.pyc
 test_settings.py
+*.swp
