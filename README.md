@@ -1,3 +1,5 @@
+UNMAINTAINED PROJECT NOTICE: This project is no longer being actively maintained off this repository. This code should be thought of as one potential way to erase your Facebook posts, and not as an off-the-shelf solution to do so.
+
 # FBEraser
 Delete your Facebook posts
 
